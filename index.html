@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angry Bird Speed Challenge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="audio/Angry Birds Theme Song.mp3" type="audio/mpeg">
+  </audio>
+
+  <main class="app">
+    <section id="homePage" class="page active home-page">
+      <div class="home-overlay">
+        <div class="title-card">
+          <p class="mini-title">PERMAINAN MATEMATIK INTERAKTIF</p>
+          <h1>ANGRY BIRD</h1>
+          <h2>SPEED CHALLENGE</h2>
+          <p class="subtitle">
+            Operasi Tolak Dalam Lingkungan 1000<br>
+            <strong>Dengan Mengumpul Semula </strong>
+          </p>
+        </div>
+
+        <div class="main-menu">
+          <button class="main-button yellow" onclick="openStudentPage()">▶ Mula Permainan</button>
+          <button class="main-button blue" onclick="showRanking()">🏆 Ranking</button>
+          <button class="main-button green" onclick="showPage('guidePage')">📖 Cara Bermain</button>
+          <button class="main-button red" onclick="showTeacherDemo()">⚙ Panel Guru</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="studentPage" class="page form-page">
+      <div class="panel">
+        <h2>Maklumat Murid</h2>
+
+        <label for="studentName">Nama murid</label>
+        <input type="text" id="studentName" placeholder="Contoh: Farisha Azzahra" autocomplete="off">
+
+        <label for="studentClass">Kelas</label>
+        <input type="text" id="studentClass" placeholder="Contoh: 4 Gemilang" autocomplete="off">
+
+        <div class="navigation-buttons">
+          <button class="secondary-button" onclick="showPage('homePage')">← Kembali</button>
+          <button class="primary-button" onclick="continueToMode()">Teruskan →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="modePage" class="page form-page">
+      <div class="panel wide-panel">
+        <h2>Pilih Mod Permainan</h2>
+
+        <div class="mode-grid">
+          <button class="mode-card friend-mode" onclick="selectMode('Lawan Kawan', this)">
+            <span class="mode-icon">🟢</span>
+            <strong>Lawan Kawan</strong>
+            <small>Mod demonstrasi seorang pemain</small>
+          </button>
+
+          <button class="mode-card computer-mode" onclick="selectMode('Lawan Komputer', this)">
+            <span class="mode-icon">🔵</span>
+            <strong>Lawan Komputer</strong>
+            <small>Berlumba menentang komputer</small>
+          </button>
+        </div>
+
+        <div id="difficultyArea" class="difficulty-area hidden">
+          <h3>Tahap komputer</h3>
+          <div class="difficulty-grid">
+            <button onclick="selectDifficulty(120, this)">🟢 Mudah<br><small>2 minit</small></button>
+            <button onclick="selectDifficulty(90, this)">🟡 Sederhana<br><small>1 minit 30 saat</small></button>
+            <button onclick="selectDifficulty(60, this)">🟠 Sukar<br><small>1 minit</small></button>
+            <button onclick="selectDifficulty(45, this)">🔴 Pakar<br><small>45 saat</small></button>
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <button class="secondary-button" onclick="showPage('studentPage')">← Kembali</button>
+          <button class="primary-button" onclick="continueToCharacter()">Teruskan →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="characterPage" class="page form-page">
+      <div class="panel wide-panel">
+        <h2>Pilih Karakter</h2>
+
+        <div class="character-grid">
+          <button class="character-card" onclick="selectCharacter('Red','images/red.jpg',this)">
+            <img src="images/red.jpg" alt="Red"><strong>Red</strong><span>Merah</span>
+          </button>
+
+          <button class="character-card" onclick="selectCharacter('Chuck','images/chuck.jpg',this)">
+            <img src="images/chuck.jpg" alt="Chuck"><strong>Chuck</strong><span>Kuning</span>
+          </button>
+
+          <button class="character-card" onclick="selectCharacter('Bomb','images/bomb.jpg',this)">
+            <img src="images/bomb.jpg" alt="Bomb"><strong>Bomb</strong><span>Hitam</span>
+          </button>
+
+          <button class="character-card" onclick="selectCharacter('Matilda','images/matilda.jpg',this)">
+            <img src="images/matilda.jpg" alt="Matilda"><strong>Matilda</strong><span>Putih</span>
+          </button>
+        </div>
+
+        <div class="navigation-buttons">
+          <button class="secondary-button" onclick="showPage('modePage')">← Kembali</button>
+          <button class="primary-button" onclick="startGame()">Mula Permainan</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="gamePage" class="page game-page">
+      <header class="game-header">
+        <div class="player-info">
+          <img id="headerCharacter" src="images/red.jpg" alt="Karakter">
+          <div><strong id="headerName">Nama Murid</strong><span id="headerClass">Kelas</span></div>
+        </div>
+
+        <div class="game-stat"><span>Soalan</span><strong><span id="questionNumber">1</span> / 6</strong></div>
+        <div class="game-stat"><span>Masa</span><strong id="timerDisplay">00:00</strong></div>
+        <div class="game-stat"><span>Skor</span><strong id="scoreDisplay">0</strong></div>
+        <div class="game-stat"><span>Kesalahan</span><strong id="mistakeDisplay">0</strong></div>
+      </header>
+
+      <section class="race-card">
+        <div class="race-title"><span>🏁 Trek Perlumbaan</span><span id="modeDisplay"></span></div>
+        <div class="race-track">
+          <div class="track-line"></div>
+          <div id="playerRunner" class="runner player-runner"><img id="raceCharacter" src="images/red.jpg" alt="Karakter pemain"></div>
+          <div id="computerRunner" class="runner computer-runner">🤖</div>
+          <div class="checkpoint checkpoint-1">1</div>
+          <div class="checkpoint checkpoint-2">2</div>
+          <div class="checkpoint checkpoint-3">3</div>
+          <div class="checkpoint checkpoint-4">4</div>
+          <div class="checkpoint checkpoint-5">5</div>
+          <div class="checkpoint checkpoint-6">🏁</div>
+        </div>
+      </section>
+
+      <section class="question-section">
+        <div class="question-card">
+          <div class="question-heading"><span id="feedbackText">Pilih jawapan yang betul</span></div>
+
+          <div class="vertical-operation">
+            <div class="place-value-labels"><span>R</span><span>P</span><span>S</span></div>
+            <div class="number-row"><span id="topHundreds">4</span><span id="topTens">5</span><span id="topOnes">2</span></div>
+            <div class="number-row subtraction-row">
+              <span class="minus-sign">−</span>
+              <span id="bottomHundreds">1</span><span id="bottomTens">2</span><span id="bottomOnes">3</span>
+            </div>
+            <div class="answer-line"></div>
+          </div>
+
+          <div id="answerOptions" class="answer-grid"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="resultPage" class="page result-page">
+      <div class="result-card">
+        <div class="trophy">🏆</div>
+        <h2>TAHNIAH!</h2>
+        <p class="mission-text">MISSION COMPLETE</p>
+
+        <div class="result-details">
+          <p><span>Nama</span><strong id="resultName"></strong></p>
+          <p><span>Kelas</span><strong id="resultClass"></strong></p>
+          <p><span>Karakter</span><strong id="resultCharacter"></strong></p>
+          <p><span>Mod</span><strong id="resultMode"></strong></p>
+          <p><span>Masa keseluruhan</span><strong id="resultTime"></strong></p>
+          <p><span>Kesalahan</span><strong id="resultMistakes"></strong></p>
+          <p><span>Kedudukan</span><strong id="resultRank"></strong></p>
+        </div>
+
+        <div class="result-buttons">
+          <button class="primary-button" onclick="restartGame()">Main Semula</button>
+          <button class="blue-button" onclick="showRanking()">Lihat Ranking</button>
+          <button class="secondary-button" onclick="showPage('homePage')">Menu Utama</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="rankingPage" class="page ranking-page">
+      <div class="ranking-card">
+        <h2>🏆 Ranking Pemain</h2>
+        <div class="filter-row">
+          <input id="classFilter" type="text" placeholder="Tapis mengikut kelas">
+          <button onclick="renderRanking()">Tapis</button>
+          <button onclick="clearRankingFilter()">Semua</button>
+        </div>
+        <div id="rankingList" class="ranking-list"></div>
+        <button class="secondary-button" onclick="showPage('homePage')">← Kembali ke Menu</button>
+      </div>
+    </section>
+
+    <section id="guidePage" class="page form-page">
+      <div class="panel">
+        <h2>📖 Cara Bermain</h2>
+        <ol class="guide-list">
+          <li>Masukkan nama dan kelas.</li>
+          <li>Pilih mod permainan.</li>
+          <li>Pilih karakter Angry Bird.</li>
+          <li>Jawab enam soalan operasi tolak.</li>
+          <li>Setiap jawapan betul menggerakkan karakter satu checkpoint.</li>
+          <li>Jawapan salah perlu dicuba semula dan pemasa terus berjalan.</li>
+          <li>Pemain terpantas dengan kesalahan paling sedikit berada di ranking teratas.</li>
+        </ol>
+        <button class="secondary-button" onclick="showPage('homePage')">← Kembali</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

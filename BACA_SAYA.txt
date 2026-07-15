@@ -1,0 +1,14 @@
+VERSI DIBETULKAN — SEMUA SOALAN MELIBATKAN PENGUMPULAN SEMULA
+
+1. 452 − 126 = 326
+2. 631 − 224 = 407
+3. 724 − 318 = 406
+4. 543 − 168 = 375
+5. 812 − 215 = 597
+6. 561 − 243 = 318
+
+CARA GUNA
+1. Ekstrak ZIP.
+2. Gantikan index.html, style.css dan script.js lama.
+3. Kekalkan folder images dan audio.
+4. Tekan Ctrl + Shift + R pada browser.
